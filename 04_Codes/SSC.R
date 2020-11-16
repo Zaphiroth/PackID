@@ -75,11 +75,8 @@ all.format <- all %>%
            dosage == '丸剂（蜜丸）' ~ '丸剂', 
 		   dosage == '细粒剂/细粉剂' ~ '颗粒剂', 
 		   dosage == '眼药水片/滴眼用片' ~ '滴眼剂', 
-		   tr
-         )
-         dosage = if_else(dosage == '丸剂（蜜丸）', '丸剂', dosage), 
-         dosage = if_else(dosage == '细粒剂/细粉剂', '颗粒剂', dosage), 
-         dosage = if_else(dosage == '眼药水片/滴眼用片', '滴眼剂', dosage))
+		   TRUE ~ dosage
+         ))
 
 # molecule
 mapping.mole <- mapping %>% 
