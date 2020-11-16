@@ -41,7 +41,6 @@ all.format <- all %>%
          prod = gsub("[()]|[（）]|[-]| |/|[\u00A0]", '', prod), 
          prod = gsub('ⅷ', '8', prod), 
          dosage = trimws(ORIGIN_DOSAGE), 
-         dosage = 
          dosage = case_when(
            dosage == 'CAP' ~ '胶囊', 
            dosage == '鼻用喷雾剂' ~ '鼻喷剂/气雾剂', 
@@ -73,7 +72,10 @@ all.format <- all %>%
            dosage == '软胶囊(胶丸)' ~ '软胶囊', 
            dosage == '糖浆剂' ~ '糖浆', 
            dosage == '糖丸' ~ '丸剂', 
-           dosage
+           dosage == '丸剂（蜜丸）' ~ '丸剂', 
+		   dosage == '细粒剂/细粉剂' ~ '颗粒剂', 
+		   dosage == '眼药水片/滴眼用片' ~ '滴眼剂', 
+		   tr
          )
          dosage = if_else(dosage == '丸剂（蜜丸）', '丸剂', dosage), 
          dosage = if_else(dosage == '细粒剂/细粉剂', '颗粒剂', dosage), 
