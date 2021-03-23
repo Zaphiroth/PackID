@@ -1,8 +1,6 @@
 
 01_Background/
 
-02_Inputs/
-
 03_Outputs/
 
 .RData
@@ -12,3 +10,5 @@
 .Rhistory
 
 1.RData
+
+*.xlsx
