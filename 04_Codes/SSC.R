@@ -207,3 +207,21 @@ system.time(prod.match <- ddply(all.prod.ssc[1:199, c(1, 4)],
 
 stopCluster(cl) ##
 
+
+##---- Sound Shape Code Stock ----
+library(reticulate)
+# py_install('pandas')
+source_python('04_Codes/read_pickle.py')
+fc <- read_pickle_file('02_Inputs/data.pkl')
+
+fc5 <- c()
+for (i in 1:length(fc)) {
+  fc5[i] <- fc[[i]]
+}
+
+fc <- data.frame(zh = names(fc), 
+                 fc = fc5)
+
+write.table(fc.map, '02_Inputs/FourCorner.txt', row.names = FALSE)
+
+
