@@ -7,7 +7,7 @@ ssc.stock <- read_lines('02_Inputs/zh_data/hanzi_ssc_res.txt',
                         progress = show_progress()) %>% 
   as.data.frame() %>% 
   rename('ssc_stock' = '.') %>% 
-  separate(ssc_stock, c('id', 'character', 'ssc'), sep = '\t')
+  separate(ssc_stock, c('id', 'character', 'ssc'), sep = '\t') ##
 
 # mapping
 mapping.format <- mapping %>% 
@@ -123,7 +123,7 @@ mapping.mole.ssc <- mapping.mole %>%
   ) %>% 
   bind_rows() %>% 
   left_join(ssc.stock, by = 'character') %>% 
-  mutate(ssc = if_else(is.na(ssc), character, ssc))
+  mutate(ssc = if_else(is.na(ssc), character, ssc)) ##
 
 all.mole.ssc <- all.mole %>% 
   arrange(mole) %>% 
@@ -136,7 +136,7 @@ all.mole.ssc <- all.mole %>%
   ) %>% 
   bind_rows() %>% 
   left_join(ssc.stock, by = 'character') %>% 
-  mutate(ssc = if_else(is.na(ssc), character, ssc))
+  mutate(ssc = if_else(is.na(ssc), character, ssc)) ##
 
 # product
 mapping.prod <- mapping %>% 
@@ -173,7 +173,7 @@ mapping.prod.ssc <- mapping.prod %>%
   ) %>% 
   bind_rows() %>% 
   left_join(ssc.stock, by = 'character') %>% 
-  mutate(ssc = if_else(is.na(ssc), character, ssc))
+  mutate(ssc = if_else(is.na(ssc), character, ssc)) ##
 
 all.prod.ssc <- all.prod %>% 
   arrange(prod) %>% 
@@ -186,7 +186,7 @@ all.prod.ssc <- all.prod %>%
   ) %>% 
   bind_rows() %>% 
   left_join(ssc.stock, by = 'character') %>% 
-  mutate(ssc = if_else(is.na(ssc), character, ssc))
+  mutate(ssc = if_else(is.na(ssc), character, ssc)) ##
 
 
 ##---- Match ----
@@ -205,5 +205,5 @@ system.time(prod.match <- ddply(all.prod.ssc[1:199, c(1, 4)],
                                 start_id = KMPIndex(ssc, mapping.prod.ssc$ssc, 0.8), 
                                 .progress = 'text'))
 
-stopCluster(cl)
+stopCluster(cl) ##
 

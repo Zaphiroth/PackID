@@ -5,23 +5,37 @@
 stock.dict <- data.frame(code = c(0:9, LETTERS), 
                          num = 0:35)
 
-StrSim <- function(ssc1, ssc2) {
+StrSim <- function(ssc1, ssc2, weight = NULL) {
   
   ssc1.split <- as.character(str_split(ssc1, '', simplify = TRUE))
   ssc2.split <- as.character(str_split(ssc2, '', simplify = TRUE))
   
-  len <- length(ssc1.split)
-  weight <- rep(1/len, len) #################
+  len1 <- length(ssc1.split)
+  len2 <- length(ssc2.split)
+  
+  if (is.null(weight)) {
+    weight <- 1 / len1
+    
+  } else if (length(weight) < len1) {
+    warning('Append zeros to weight vector.')
+    weight.append <- rep(0, len1 - length(weight))
+    weight <- append(weight, weight.append)
+    
+  } else if (length(weight) > len1) {
+    warning('Cut the weight vector to ssc1 length.')
+    weight <- weight[1:len1]
+  }
+  
   id <- c()
   
-  if (length(ssc1.split) == 0 | length(ssc2.split) == 0) {
+  if (len1 == 0 || len2 == 0) {
     similarity <- 0
     
-  } else if (len <= 1 || length(ssc2.split) <= 1) {
+  } else if (len1 == 1 || len2 == 1) {
     similarity <- as.integer(all(ssc1.split == ssc2.split))
     
   } else {
-    for (i in 1:(len-1)) {
+    for (i in 1:(len1 - 1)) {
       if (ssc1.split[i] == ssc2.split[i]) {
         id <- append(id, 1)
       } else {
@@ -29,10 +43,10 @@ StrSim <- function(ssc1, ssc2) {
       }
     }
     
-    id.num <- 1 - abs(stock.dict$num[stock.dict$code == ssc1.split[len]] - 
-                        stock.dict$num[stock.dict$code == ssc2.split[len]]) / 
-      max(stock.dict$num[stock.dict$code == ssc1.split[len]], 
-          stock.dict$num[stock.dict$code == ssc2.split[len]])
+    id.num <- 1 - abs(stock.dict$num[stock.dict$code == ssc1.split[len1]] - 
+                        stock.dict$num[stock.dict$code == ssc2.split[len1]]) / 
+      max(stock.dict$num[stock.dict$code == ssc1.split[len1]], 
+          stock.dict$num[stock.dict$code == ssc2.split[len1]])
     id <- append(id, id.num)
     
     similarity <- sum(id * weight)

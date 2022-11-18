@@ -12,3 +12,4 @@
 1.RData
 
 *.xlsx
+.Rproj.user
